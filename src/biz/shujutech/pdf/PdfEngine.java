@@ -29,6 +29,10 @@ public class PdfEngine {
 		return(GeneratePdf(aOutputFileName, aHtmlStr, "file:////"));
 	}
 
+	public static ByteArrayOutputStream GeneratePdf(String aHtmlStr) throws Exception {
+		return((ByteArrayOutputStream) GeneratePdf(null, aHtmlStr, "file:////"));
+	}
+
 	// as Base64 NO password
 	public static String GeneratePdfAsBase64(String aHtmlStr, String aUrlBase) throws Exception {
 		ByteArrayOutputStream outStream;
@@ -103,7 +107,11 @@ public class PdfEngine {
 	public static OutputStream GeneratePdf(String aOutputFileName, String aHtmlStr, String aUrlBase) throws Exception {
 		OutputStream outStream = null;
 		try {
-			outStream = new FileOutputStream(aOutputFileName);
+			if (aOutputFileName == null || aOutputFileName.isEmpty()) {
+				outStream = new ByteArrayOutputStream();
+			} else {
+				outStream = new FileOutputStream(aOutputFileName);
+			}
 			try {
 				PdfRendererBuilder builder = new PdfRendererBuilder();
 				builder.withHtmlContent(ToXHtml(aHtmlStr), aUrlBase);
@@ -118,7 +126,7 @@ public class PdfEngine {
 					App.logEror(PdfEngine.class, ex);
 				}
 			}
-		} catch (IOException ex) {
+		} catch (Hinderance ex) {
 			throw new Hinderance(ex, PdfEngine.class.getSimpleName() + " fail to genereate Pdf");
 		}
 
