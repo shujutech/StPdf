@@ -19,6 +19,8 @@ import org.jsoup.nodes.Document;
 
 public class PdfEngine {
 
+	public static final String ROOT_PATH = "file:////";
+
 	private static String ToXHtml(String html) {
 		final Document document = Jsoup.parse(html);
 		document.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
@@ -26,11 +28,15 @@ public class PdfEngine {
 	}
 
 	public static OutputStream GeneratePdf(String aOutputFileName, String aHtmlStr) throws Exception {
-		return(GeneratePdf(aOutputFileName, aHtmlStr, "file:////"));
+		return GeneratePdf(aOutputFileName, aHtmlStr, ROOT_PATH);
 	}
 
 	public static ByteArrayOutputStream GeneratePdf(String aHtmlStr) throws Exception {
-		return((ByteArrayOutputStream) GeneratePdf(null, aHtmlStr, "file:////"));
+		return (ByteArrayOutputStream) GeneratePdf(null, aHtmlStr, ROOT_PATH);
+	}
+
+	public static ByteArrayOutputStream GeneratePdfWithBaseUrl(String aHtmlStr, String aUrlBase) throws Exception {
+		return (ByteArrayOutputStream) GeneratePdf(null, aHtmlStr, aUrlBase);
 	}
 
 	// as Base64 NO password
