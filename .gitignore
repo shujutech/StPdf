@@ -1,3 +1,10 @@
-/.project
-/dist/
-/build/
+*.class
+*.jar
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
